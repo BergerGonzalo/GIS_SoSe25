@@ -1,0 +1,113 @@
+---
+title: "GIS_ex1_Berger"
+output: html_document
+---
+```{r data}
+install.packages("pacman")
+library(pacman)
+```
+```{r data}
+deu_0 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_0.shp")
+
+admin_0 <- ggplot()+
+  geom_sf(data = deu_0)+
+  theme_minimal()
+print(admin_0)
+```
+```{r data}
+deu_1 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_1.shp")
+
+admin_1 <- ggplot()+
+  geom_sf(data = deu_1)+
+  theme_minimal()
+print(admin_1)
+```
+```{r data}
+deu_2 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_2.shp")
+
+admin_2 <- ggplot()+
+  geom_sf(data = deu_2)+
+  theme_minimal()
+print(admin_2)
+```
+```{r data}
+deu_3 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_3.shp")
+
+admin_3 <- ggplot()+
+  geom_sf(data = deu_3)+
+  theme_minimal()
+print(admin_3)
+```
+```{r data}
+deu_4 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_4.shp")
+
+admin_4 <- ggplot()+
+  geom_sf(data = deu_4)+
+  theme_minimal()
+print(admin_4)
+```
+```{r data}
+names(deu_4)
+Dresden <- deu_4|>
+  filter(NAME_4 == "Dresden")
+
+Dresden_plot <- ggplot()+
+  geom_sf(data = Dresden)
+print(Dresden_plot)
+```
+
+
+
+```{r data}
+cemeteries <- read_delim("Friedhöfe.csv", delim = ";")
+names(cemeteries)
+cemeteries_sf <- st_as_sf(cemeteries, wkt = "geom")
+
+cemeteries_area_plot <- ggplot()+
+  geom_sf(data=Dresden, colour="grey")+
+  geom_sf(data= cemeteries_sf, aes(fill= "Cemeteries"),show.legend = "point",colour="red")+
+  labs(fill="")+
+  theme_minimal()
+
+print(cemeteries_area_plot)
+```
+```{r data}
+houses <- read_delim("data_houses/dresden.json")
+houses_names <- colnames(houses)
+houses <- rbind(houses_names, houses)
+colnames(houses) <- c("None", "street", "lon", "house", "lat")
+houses <- houses[,-1]
+houses$street <- sub(",.*", "", houses$street)
+houses$lon <- sub(",.*", "", houses$lon)
+houses$house <- sub(",.*", "", houses$house)
+houses$lat <- sub("}.*", "", houses$lat)
+colSums(is.na(houses))
+
+houses$lat[is.na(houses$lat)] <- houses$house[is.na(houses$lat)]
+houses$lat <- sub("}.*", "", houses$lat)
+colSums(is.na(houses))
+houses <- houses[,-3]
+houses <- houses[houses$lat >= 13.5 & houses$lat <= 14.0, ]
+
+houses_sf <- st_as_sf(houses, coords = c("lat", "lon"), crs = 4326)
+
+houses_area_plot <- ggplot()+
+  geom_sf(data=Dresden, colour="grey")+
+  geom_sf(data= houses_sf, aes(fill= "Houses"),show.legend = "point",colour="blue", size = 0.0001)+
+  labs(fill="")+
+  theme_minimal()
+print(houses_area_plot)
+```
+```{r data}
+houses_area_plot <- ggplot()+
+  geom_sf(data=Dresden, colour="grey")+
+  geom_sf(data= houses_sf, aes(fill= "Houses"),show.legend = "point",colour="blue", size = 0.0001)+
+  geom_sf(data= cemeteries_sf, aes(fill= "Cemeteries"), shape = 17, colour="red", size = 1.0)+
+  labs(fill="")+
+  theme_minimal()
+print(houses_area_plot)
+```
+
+
+
+
