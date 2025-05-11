@@ -269,3 +269,31 @@ bus_lines_area_plot <- ggplot()+
 
 print(bus_lines_area_plot)
 ```
+```{r data}
+Dresden_area_plot <- ggplot()+
+ geom_sf(data=Dresden, colour="grey")+
+  geom_sf(data = green_spaces_sf, aes(fill = "Green and open spaces"), colour = "darkgreen")+
+  geom_sf(data= bodies_of_water_sf, aes(fill = "Water bodies"),colour="blue")+
+  geom_sf(data= houses_sf, fill= "darkgrey",colour="darkgrey", size = 0.0001)+
+  geom_sf(data= bike_paths_sf, aes(fill= "Bike paths"), colour = "purple")+
+  geom_sf(data= cemeteries_sf, aes(fill= "Cemeteries"), shape = 17, colour="red", size = 1.5)+
+  geom_sf(data= libraries_sf, aes(fill = "Libraries"), shape = 17, colour="cyan", size = 1.5)+
+  geom_sf(data= bus_lines_sf, aes(fill= "Bus lines"), colour = "gold")+
+  geom_sf(data= tram_lines_sf, aes(fill = "Tram lines"), size = 2.0)+
+  scale_fill_manual(
+    name = "Legend",
+  values = c(
+    "Green and open spaces" ="darkgreen",
+    "Water bodies" = "blue",
+    "Bus lines" = "gold",
+    "Bike paths" = "purple",
+    "Cemeteries" = "red",
+    "Libraries" = "cyan",
+    "Tram lines" = "black"))+
+  labs(fill="",
+       title = "Map of Dresden")+
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+print(Dresden_area_plot)
+```
