@@ -1,3 +1,8 @@
+---
+title: "Ex_1"
+format: html
+---
+
 ### Exercise 1
 
 ---
