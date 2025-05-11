@@ -1,6 +1,7 @@
 ---
 title: "Ex_1"
 format: html
+GITHub: https://github.com/BergerGonzalo/GIS_SoSe25
 ---
 
 ### Exercise 1

@@ -4,6 +4,7 @@
 title: "GIS_ex1_Berger"
 output: html_document
 author: Gonzalo Berger
+GITHub: https://github.com/BergerGonzalo/GIS_SoSe25
 ---
 
 ```{r data}
