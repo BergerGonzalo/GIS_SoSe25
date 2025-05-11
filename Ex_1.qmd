@@ -357,3 +357,48 @@ OpenDataPortal der Landeshauptstadt Dresden. (May 23, 2024). Grün- und Freiflä
 OpenDataPortal der Landeshauptstadt Dresden. (May 24, 2024). Elbe und stehende Gewässer [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
 
 OpenDataPortal der Landeshauptstadt Dresden. (January 20, 2025). Straßenbahntrassen [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
+
+**Appendix**
+
+**OpenAI. (2025). *ChatGPT* (May 9 version) \[Large language model\]. [https://chat.openai.com](https://chat.openai.com)**
+
+**Prompt:** If I have geographic data with longitude and latitude in two separate columns from a file previously loaded into R, how can I combine them?
+
+**Output:** In **R**, if you have longitude and latitude in two separate columns and want to combine them, you can do it in a few ways depending on your goal:
+
+---
+
+### **🔹 1\. Combine as a String Column**
+
+If you just want a string like `"lat, lon"` in a new column:
+
+df$coordinates \<- paste(df$latitude, df$longitude, sep \= ", ")
+
+---
+
+### **🔹 2\. Combine as a Spatial Object (sf package)**
+
+If you're working with geographic data and plan to do spatial analysis:
+
+library(sf)
+
+\# Assuming your dataframe is called \`df\` and columns are named \`longitude\` and \`latitude\`  
+df\_sf \<- st\_as\_sf(df, coords \= c("longitude", "latitude"), crs \= 4326\)
+
+This converts your data frame to a **simple features** (sf) object, with a geometry column.
+
+---
+
+### **🔹 3\. Combine as a List or Matrix**
+
+If you just want coordinate pairs in a list:
+
+df$coordinates \<- Map(c, df$longitude, df$latitude)
+
+Or as a matrix (e.g., for plotting or clustering):
+
+coords\_matrix \<- as.matrix(df\[, c("longitude", "latitude")\])
+
+---
+
+Would you like to visualize this data on a map or prepare it for export?
