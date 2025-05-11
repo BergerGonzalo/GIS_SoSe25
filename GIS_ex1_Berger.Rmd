@@ -1,11 +1,16 @@
+### Exercise 1
+
 ---
 title: "GIS_ex1_Berger"
 output: html_document
+author: Gonzalo Berger
 ---
+
 ```{r data}
 install.packages("pacman")
 library(pacman)
 ```
+
 ```{r data}
 deu_0 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_0.shp")
 
@@ -14,6 +19,7 @@ admin_0 <- ggplot()+
   theme_minimal()
 print(admin_0)
 ```
+
 ```{r data}
 deu_1 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_1.shp")
 
@@ -22,6 +28,7 @@ admin_1 <- ggplot()+
   theme_minimal()
 print(admin_1)
 ```
+
 ```{r data}
 deu_2 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_2.shp")
 
@@ -30,6 +37,7 @@ admin_2 <- ggplot()+
   theme_minimal()
 print(admin_2)
 ```
+
 ```{r data}
 deu_3 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_3.shp")
 
@@ -38,6 +46,7 @@ admin_3 <- ggplot()+
   theme_minimal()
 print(admin_3)
 ```
+
 ```{r data}
 deu_4 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_4.shp")
 
@@ -46,6 +55,7 @@ admin_4 <- ggplot()+
   theme_minimal()
 print(admin_4)
 ```
+
 ```{r data}
 names(deu_4)
 Dresden <- deu_4|>
@@ -55,8 +65,6 @@ Dresden_plot <- ggplot()+
   geom_sf(data = Dresden)
 print(Dresden_plot)
 ```
-
-
 
 ```{r data}
 cemeteries <- read_delim("Friedhöfe.csv", delim = ";")
@@ -71,25 +79,26 @@ cemeteries_area_plot <- ggplot()+
 
 print(cemeteries_area_plot)
 ```
+
 ```{r data}
 houses <- read_delim("data_houses/dresden.json")
 houses_names <- colnames(houses)
 houses <- rbind(houses_names, houses)
-colnames(houses) <- c("None", "street", "lon", "house", "lat")
+colnames(houses) <- c("None", "street", "lat", "house", "lon")
 houses <- houses[,-1]
 houses$street <- sub(",.*", "", houses$street)
-houses$lon <- sub(",.*", "", houses$lon)
+houses$lat <- sub(",.*", "", houses$lat)
 houses$house <- sub(",.*", "", houses$house)
-houses$lat <- sub("}.*", "", houses$lat)
+houses$lon <- sub("}.*", "", houses$lon)
 colSums(is.na(houses))
 
-houses$lat[is.na(houses$lat)] <- houses$house[is.na(houses$lat)]
-houses$lat <- sub("}.*", "", houses$lat)
+houses$lon[is.na(houses$lon)] <- houses$house[is.na(houses$lon)]
+houses$lon <- sub("}.*", "", houses$lon)
 colSums(is.na(houses))
 houses <- houses[,-3]
-houses <- houses[houses$lat >= 13.5 & houses$lat <= 14.0, ]
+houses <- houses[houses$lon >= 13.5 & houses$lon <= 14.0, ]
 
-houses_sf <- st_as_sf(houses, coords = c("lat", "lon"), crs = 4326)
+houses_sf <- st_as_sf(houses, coords = c("lon", "lat"), crs = 4326)
 
 houses_area_plot <- ggplot()+
   geom_sf(data=Dresden, colour="grey")+
@@ -98,6 +107,7 @@ houses_area_plot <- ggplot()+
   theme_minimal()
 print(houses_area_plot)
 ```
+
 ```{r data}
 houses_area_plot <- ggplot()+
   geom_sf(data=Dresden, colour="grey")+
@@ -107,6 +117,7 @@ houses_area_plot <- ggplot()+
   theme_minimal()
 print(houses_area_plot)
 ```
+
 ```{r data}
 green_spaces <- read_delim("Grün- und Freiflächen.csv", delim = ";")
 green_spaces_sf <- st_as_sf(green_spaces, wkt = "shape")
@@ -119,6 +130,7 @@ green_spaces_area_plot <- ggplot()+
 
 print(green_spaces_area_plot)
 ```
+
 ```{r data}
 green_spaces <- read_delim("Grün- und Freiflächen.csv", delim = ";")
 green_spaces_sf <- st_as_sf(green_spaces, wkt = "shape")
@@ -133,6 +145,7 @@ green_spaces_area_plot <- ggplot()+
 
 print(green_spaces_area_plot)
 ```
+
 ```{r data}
 bodies_of_water <- read_delim("Elbe und stehende Gewässer.csv", delim = ";")
 bodies_of_water_sf <- st_as_sf(bodies_of_water, wkt = "shape")
@@ -145,6 +158,7 @@ bodies_of_water_area_plot <- ggplot()+
 
 print(bodies_of_water_area_plot)
 ```
+
 ```{r data}
 green_spaces <- read_delim("Grün- und Freiflächen.csv", delim = ";")
 green_spaces_sf <- st_as_sf(green_spaces, wkt = "shape")
@@ -160,6 +174,7 @@ green_spaces_area_plot <- ggplot()+
 
 print(green_spaces_area_plot)
 ```
+
 ```{r data}
 tram_lines <- read_delim("Straßenbahntrassen.csv", delim = ";")
 tram_lines_sf <- st_as_sf(tram_lines, wkt = "geom")
@@ -172,6 +187,7 @@ tram_lines_area_plot <- ggplot()+
 
 print(tram_lines_area_plot)
 ```
+
 ```{r data}
 tram_lines_area_plot <- ggplot()+
   geom_sf(data=Dresden, colour="grey")+
@@ -185,6 +201,7 @@ tram_lines_area_plot <- ggplot()+
 
 print(tram_lines_area_plot)
 ```
+
 ```{r data}
 bus_lines <- read_delim("Buslinien.csv", delim = ";")
 bus_lines_sf <- st_as_sf(bus_lines, wkt = "shape")
@@ -197,6 +214,7 @@ bus_lines_area_plot <- ggplot()+
 
 print(bus_lines_area_plot)
 ```
+
 ```{r data}
 bus_lines <- read_delim("Buslinien.csv", delim = ";")
 bus_lines_sf <- st_as_sf(bus_lines, wkt = "shape")
@@ -214,6 +232,7 @@ bus_lines_area_plot <- ggplot()+
 
 print(bus_lines_area_plot)
 ```
+
 ```{r data}
 bike_paths <- read_delim("Anlagen des Radverkehrs.csv", delim = ";")
 bike_paths_sf <- st_as_sf(bike_paths, wkt = "geom")
@@ -226,6 +245,7 @@ bike_paths_area_plot <- ggplot()+
 
 print(bike_paths_area_plot)
 ```
+
 ```{r data}
 bus_lines_area_plot <- ggplot()+
  geom_sf(data=Dresden, colour="grey")+
@@ -241,6 +261,7 @@ bus_lines_area_plot <- ggplot()+
 
 print(bus_lines_area_plot)
 ```
+
 ```{r data}
 libraries <- read_delim("Bibliotheken.csv", delim = ";")
 libraries_sf <- st_as_sf(libraries, wkt = "geom")
@@ -253,6 +274,7 @@ libraries_area_plot <- ggplot()+
 
 print(libraries_area_plot)
 ```
+
 ```{r data}
 bus_lines_area_plot <- ggplot()+
  geom_sf(data=Dresden, colour="grey")+
@@ -269,6 +291,7 @@ bus_lines_area_plot <- ggplot()+
 
 print(bus_lines_area_plot)
 ```
+
 ```{r data}
 Dresden_area_plot <- ggplot()+
  geom_sf(data=Dresden, colour="grey")+
@@ -297,3 +320,23 @@ Dresden_area_plot <- ggplot()+
 
 print(Dresden_area_plot)
 ```
+
+#References
+
+GADM. (n.d.). Shapefile: gadm41_DEU [Database]. Retrieved May 9, 2025 from <https://gadm.org/data.html>
+
+[OffenesDresden.de](http://offenesdresden.de) (n.d.) .Häuseradressen aus OpenStreetMap [Database]. Retrieved May 9, 2025 from <https://offenesdresden.de/>
+
+OpenDataPortal der Landeshauptstadt Dresden. (June 19, 2024). Buslinien [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
+
+OpenDataPortal der Landeshauptstadt Dresden. (April 9, 2024). Friedhöfe [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
+
+OpenDataPortal der Landeshauptstadt Dresden. (April 24, 2024). Anlagen des Radverkehrs [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
+
+OpenDataPortal der Landeshauptstadt Dresden. (April 24, 2024). Bibliotheken [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
+
+OpenDataPortal der Landeshauptstadt Dresden. (May 23, 2024). Grün- und Freiflächen [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
+
+OpenDataPortal der Landeshauptstadt Dresden. (May 24, 2024). Elbe und stehende Gewässer [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
+
+OpenDataPortal der Landeshauptstadt Dresden. (January 20, 2025). Straßenbahntrassen [Database]. Retrieved from <https://opendata.dresden.de/informationsportal/#app/mainpage//Verkehrsnetz%20-%20Autobahnen,%20Stra%C3%9Fen,%20Wege,%20Br%C3%BCcken%20und%20Tunnel//>
