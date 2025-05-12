@@ -1,5 +1,6 @@
 
 #title: "Exercise 1"
+#Author: Gonzalo Berger
 #GITHub: https://github.com/BergerGonzalo/GIS_SoSe25
 
 #Installing packages and loading libraries
