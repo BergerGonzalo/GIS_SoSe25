@@ -1,4 +1,9 @@
 
+#title: "Exercise 1"
+#GITHub: https://github.com/BergerGonzalo/GIS_SoSe25
+
+#Installing packages and loading libraries
+
 install.packages("pacman")
 library(pacman)
 install.packages("sf")
@@ -7,13 +12,17 @@ install.packages("ggplot2")
 library(ggplot2)
 install.packages("readr")
 library(readr)
-options(device = "windows") 
+options(device = "windows")
+
+#Importing the data from GADM
 
 deu_4 <- st_read("data/gadm41_DEU_shp/gadm41_DEU_4.shp")
 
 admin_4 <- ggplot()+
   geom_sf(data = deu_4)+
   theme_minimal()
+
+#Visualizing the map of Dresden
 
 names(deu_4)
 Dresden <- deu_4[8760, ]
@@ -22,6 +31,8 @@ Dresden_plot <- ggplot()+
   geom_sf(data = Dresden)
 
 print(Dresden_plot)
+
+#Cemeteries
 
 cemeteries <- read_delim("Friedhöfe.csv", delim = ";")
 names(cemeteries)
@@ -34,6 +45,8 @@ cemeteries_area_plot <- ggplot()+
   theme_minimal()
 
 print(cemeteries_area_plot)
+
+#Houses
 
 houses <- read_delim("data_houses/dresden.json")
 houses_names <- colnames(houses)
@@ -61,6 +74,8 @@ houses_area_plot <- ggplot()+
   theme_minimal()
 print(houses_area_plot)
 
+#Green and open spaces
+
 green_spaces <- read_delim("Grün- und Freiflächen.csv", delim = ";")
 green_spaces_sf <- st_as_sf(green_spaces, wkt = "shape")
 
@@ -72,6 +87,7 @@ green_spaces_area_plot <- ggplot()+
 
 print(green_spaces_area_plot)
 
+#Bodies of water
 
 bodies_of_water <- read_delim("Elbe und stehende Gewässer.csv", delim = ";")
 bodies_of_water_sf <- st_as_sf(bodies_of_water, wkt = "shape")
@@ -84,6 +100,8 @@ bodies_of_water_area_plot <- ggplot()+
 
 print(bodies_of_water_area_plot)
 
+#Tram lines
+
 tram_lines <- read_delim("Straßenbahntrassen.csv", delim = ";")
 tram_lines_sf <- st_as_sf(tram_lines, wkt = "geom")
 
@@ -93,6 +111,8 @@ tram_lines_area_plot <- ggplot()+
   labs(fill="")+
   theme_minimal()
 print(tram_lines_area_plot)
+
+#Bus lines
 
 bus_lines <- read_delim("Buslinien.csv", delim = ";")
 bus_lines_sf <- st_as_sf(bus_lines, wkt = "shape")
@@ -104,6 +124,8 @@ bus_lines_area_plot <- ggplot()+
   theme_minimal()
 print(bus_lines_area_plot)
 
+#Bike paths
+
 bike_paths <- read_delim("Anlagen des Radverkehrs.csv", delim = ";")
 bike_paths_sf <- st_as_sf(bike_paths, wkt = "geom")
 
@@ -114,6 +136,8 @@ bike_paths_area_plot <- ggplot()+
   theme_minimal()
 print(bike_paths_area_plot)
 
+#Libraries
+
 libraries <- read_delim("Bibliotheken.csv", delim = ";")
 libraries_sf <- st_as_sf(libraries, wkt = "geom")
 
@@ -123,6 +147,8 @@ libraries_area_plot <- ggplot()+
   labs(fill="")+
   theme_minimal()
 print(libraries_area_plot)
+
+#Combining all the layers into one plot
 
 Dresden_area_plot <- ggplot()+
   geom_sf(data=Dresden, colour="grey")+
@@ -149,6 +175,7 @@ Dresden_area_plot <- ggplot()+
   theme_minimal()+
   theme(plot.title = element_text(hjust = 0.5))
 
+#Output
 
 print(Dresden_area_plot)
 
