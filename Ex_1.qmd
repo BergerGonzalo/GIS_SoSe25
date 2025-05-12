@@ -16,14 +16,17 @@ author: Gonzalo Berger
 install.packages("pacman")
 library(pacman)
 ```
+
 ```{r data}
 install.packages("sf")
 library(sf)
 ```
+
 ```{r data}
 install.packages("ggplot2")
 library(ggplot2)
 ```
+
 ```{r data}
 install.packages("readr")
 library(readr)
@@ -338,7 +341,6 @@ Dresden_area_plot <- ggplot()+
 
 print(Dresden_area_plot)
 ```
-
 #References
 
 GADM. (n.d.). Shapefile: gadm41_DEU [Database]. Retrieved May 9, 2025 from <https://gadm.org/data.html>
